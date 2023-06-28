@@ -16,7 +16,7 @@ app.use(tasktodo);
 app.use(taskdone);
 
 sequelize
-  .sync({ force: true })
+  .sync()
   .then((result) => {
     app.listen(3002);
   })

@@ -3,15 +3,19 @@ const tasktodo = require("../model/todolist");
 
 exports.checkbox_clicked = (req, res, next) => {
   const productid = req.params.productid;
+  console.log(productid);
   tasktodo
     .findByPk(productid)
     .then((prod) => {
+      console.log(prod);
       if (prod.finished) {
-        let prod2 = prod;
-        prod.destroy();
-        taskdone.create({
-          taskname: prod2.taskname,
-          taskdescription: prod2.taskdescription,
+        let prod2 = Object.assign({}, prod);
+        console.log(prod2);
+        return prod.destroy().then((res) => {
+          taskdone.create({
+            taskname: prod2.dataValues.taskname,
+            taskdescription: prod2.dataValues.taskdescription,
+          });
         });
       }
     })
@@ -23,6 +27,7 @@ exports.checkbox_clicked = (req, res, next) => {
 exports.clicked = (req, res, next) => {
   const id = req.params.productid;
   tasktodo.update({ finished: true }, { where: { id } }).then((prod) => {
+    console.log("clicked-done");
     res.redirect("/");
   });
 };

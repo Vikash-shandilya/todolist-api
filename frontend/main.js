@@ -3,6 +3,7 @@ window.addEventListener("DOMContentLoaded", async () => {
   console.log(res);
 
   for (let i = 0; i < res.data.prod.length; i++) {
+    console.log(res.data.prod[i]);
     let newdiv = document.createElement("div");
     let newli = document.createElement("li");
     let checkbox_btn = document.createElement("input");
@@ -15,7 +16,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     cross_btn.innerText = "X";
     cross_btn.setAttribute("productid", res.data.prod[i].id);
     checkbox_btn.setAttribute("productid", res.data.prod[i].id);
-    newli.textContent = `Task Name = ${res.data.prod[i].taskname} and Task description is  ${res.data.prod[i].taskdescription} `;
+    newli.textContent = `Task Name = ${res.data.prod[i].taskname} and Task description is=  ${res.data.prod[i].taskdescription} `;
 
     newli.appendChild(cross_btn);
     newli.appendChild(checkbox_btn);
@@ -23,22 +24,14 @@ window.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("tasks").appendChild(newdiv);
   }
   for (let i = 0; i < res.data.prod2.length; i++) {
+    console.log(res.data.prod2[i]);
     let newdiv = document.createElement("div");
     let newli = document.createElement("li");
     let checkbox_btn = document.createElement("input");
     let cross_btn = document.createElement("button");
 
-    checkbox_btn.type = "checkbox";
-    checkbox_btn.addEventListener("change", clicked);
-    cross_btn.onclick = deleted;
-    cross_btn.type = "submit";
-    cross_btn.innerText = "X";
-    cross_btn.setAttribute("productid", res.data.prod2[i].id);
-    checkbox_btn.setAttribute("productid", res.data.prod2[i].id);
     newli.textContent = `Task Name = ${res.data.prod2[i].taskname} and Task description is  ${res.data.prod2[i].taskdescription} `;
 
-    newli.appendChild(cross_btn);
-    newli.appendChild(checkbox_btn);
     newdiv.appendChild(newli);
     document.getElementById("taskdone").appendChild(newdiv);
   }
@@ -67,7 +60,8 @@ async function submitform() {
   newli.appendChild(cross_btn);
   newli.appendChild(checkbox_btn);
   newdiv.appendChild(newli);
-  document.getElementById("taskdone").appendChild(newdiv);
+  document.getElementById("tasks").appendChild(newdiv);
+  window.location.reload();
 }
 
 async function clicked(e) {
@@ -75,7 +69,7 @@ async function clicked(e) {
   let id = e.target.getAttribute("productid");
   console.log(id);
   let res = await axios.get(`http://localhost:3002/clicked/${id}`);
-  let res2 = await axios.get(`http://localhost:3002//checkbox_clicked/${id}`);
+  let res2 = await axios.get(`http://localhost:3002/checkbox_clicked/${id}`);
   window.location.reload();
 }
 

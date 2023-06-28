@@ -49,7 +49,10 @@ exports.delete = (req, res, next) => {
   tasktodo
     .findByPk(productid)
     .then((prod) => {
-      prod.destroy();
+      return prod.destroy();
+    })
+    .then(() => {
+      res.redirect("/");
     })
     .catch((err) => {
       console.log(err);
